@@ -16,8 +16,66 @@ model User {
   houseNumber String     @default("")
   password    String
   createdAt   DateTime   @default(now())
+  purchases   Purchase[]
+  Cart        Cart[]
 
   @@map("users")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String
+  price       Int        @default(0)
+  description String
+  categoryId  Int
+  createdAt   DateTime   @default(now())
+  quantity    Int        @default(0)
+  imageURL    String     @default("")
+  categories  Category   @relation(fields: [categoryId], references: [id])
+  purchases   Purchase[]
+  Cart        Cart[]
+
+  @@map("products")
+}
+
+model PizzaEdges {
+  id          Int        @id @default(autoincrement())
+  name        String     
+  price       Int        @default(0)
+
+  @@map("edges")
+}
+
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime @default(now())
+  products  Product  @relation(fields: [productId], references: [id])
+  users     User     @relation(fields: [userId], references: [id])
+
+  @@map("purchases")
+}
+
+model Cart {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+  quantity  Int
+  edgeId    Int     @default(0)
+  products  Product @relation(fields: [productId], references: [id])
+  users     User    @relation(fields: [userId], references: [id])
+
+  @@map("carts")
 }
 
 model Regions {

@@ -5,6 +5,7 @@ import { useState } from "react";
 import InitialPage from "../pages/InitialPage";
 import Login from "../pages/Login.jsx";
 import Register from "../pages/Register";
+import ControlPage from "../pages/AdminPages/Control";
 
 export default function App(){
     const [token,setToken] = useState(localStorage.getItem('authToken'));
@@ -43,6 +44,7 @@ export default function App(){
                     <Route path="/initialpage" element={<InitialPage />} />
                     <Route path="/" element={<Login />} />
                     <Route path="/sign-up" element={<Register />} />
+                    <Route path="/admin/control" element={<ControlPage />} />
                 </Routes>
             </UserContext.Provider>
         </BrowserRouter>
