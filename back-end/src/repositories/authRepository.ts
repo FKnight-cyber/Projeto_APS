@@ -1,4 +1,4 @@
-import prisma from "../database";
+import prisma from "../database"
 import { IUserData } from "../types/authTypes"
 
 async function insert(user:IUserData) {
@@ -6,13 +6,13 @@ async function insert(user:IUserData) {
 }
 
 async function findUser(email:string) {
-    return await prisma.user.findUnique({where:{email}});
+    return await prisma.user.findUnique({where:{email}})
 }
 
 
 const authRepository = {
     insert,
     findUser
-};
+}
 
-export default authRepository;
+export default authRepository

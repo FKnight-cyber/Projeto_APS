@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 const edges = [
     {id:1, name: 'Chocolate', price: 500},
     {id:2, name: 'Cheddar', price: 250},
     {id:3, name: 'Catupiry', price: 250}
-];
+]
 
 const regions = [
     {name: 'Parangaba'},
@@ -130,12 +130,12 @@ const products = [
 
 async function main() {
 
-    await createEdges();  
-    await createCategories();
-    await createRegions();
-    await createProducts();
+    await createEdges()  
+    await createCategories()
+    await createRegions()
+    await createProducts()
 
-};
+}
 
 async function createCategories() {
     for(const category of categories){
@@ -145,7 +145,7 @@ async function createCategories() {
             create:category
         })
     }
-};
+}
 
 async function createEdges() {
     for(const edge of edges){
@@ -155,7 +155,7 @@ async function createEdges() {
             create:edge
         })
     }
-};
+}
 
 async function createProducts() {
     for(const product of products){
@@ -165,7 +165,7 @@ async function createProducts() {
             create:product
         })
     }
-};
+}
 
 async function createRegions() {
     for(const region of regions){
@@ -175,13 +175,12 @@ async function createRegions() {
             create:region
         })
     }
-};
+}
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

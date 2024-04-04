@@ -1,47 +1,47 @@
-import { checkError } from "../middlewares/errorHandler";
-import categoriesRepository from "../repositories/categoriesRepository";
-import productsRepository from "../repositories/productsRepository";
-import { IUserData } from "../types/authTypes";
+import { checkError } from "../middlewares/errorHandler"
+import categoriesRepository from "../repositories/categoriesRepository"
+import productsRepository from "../repositories/productsRepository"
+import { IUserData } from "../types/authTypes"
 
 async function getCategories(){
-    return categoriesRepository.getCategories();
-};
+    return categoriesRepository.getCategories()
+}
 
 async function updateCategoryById(id:number, name:string, user:IUserData) {
-    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-    const checkCategory = await categoriesRepository.findCategoryById(id);
+    const checkCategory = await categoriesRepository.findCategoryById(id)
 
-    if(!checkCategory) throw checkError(404, "Categoria não está cadastrada!");
+    if(!checkCategory) throw checkError(404, "Categoria não está cadastrada!")
 
-    await categoriesRepository.update(id, name);
+    await categoriesRepository.update(id, name)
 
     return {
         id,
         name
     }
-};
+}
 
 async function deleleCategoryById(id:number, user:IUserData) {
-    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-    const checkCategory = await categoriesRepository.findCategoryById(id);
+    const checkCategory = await categoriesRepository.findCategoryById(id)
 
-    if(!checkCategory) throw checkError(404, "Categoria não está cadastrada!");
+    if(!checkCategory) throw checkError(404, "Categoria não está cadastrada!")
 
-    await productsRepository.deleteAllProductsByCategoryId(id);
+    await productsRepository.deleteAllProductsByCategoryId(id)
 
-    await categoriesRepository.remove(id);
-};
+    await categoriesRepository.remove(id)
+}
 
 async function addCategory(name:string, user:IUserData) {
-    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-    const checkCategory = await categoriesRepository.findCategoryByName(name);
+    const checkCategory = await categoriesRepository.findCategoryByName(name)
 
-    if(checkCategory) throw checkError(409, "Categoria já está cadastrada!");
+    if(checkCategory) throw checkError(409, "Categoria já está cadastrada!")
 
-    await categoriesRepository.insert(name);
+    await categoriesRepository.insert(name)
 }
 
 const categoryServices = {
@@ -49,6 +49,6 @@ const categoryServices = {
     updateCategoryById,
     deleleCategoryById,
     addCategory
-};
+}
 
-export default categoryServices;
+export default categoryServices

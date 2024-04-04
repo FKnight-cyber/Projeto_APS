@@ -1,32 +1,32 @@
-import categoriesRepository from "../repositories/categoriesRepository";
-import productsRepository from "../repositories/productsRepository";
-import { checkError } from "../middlewares/errorHandler";
-import { IProductData, IProductDataUpdate } from "../types/productTypes";
-import { IUserData } from "../types/authTypes";
+import categoriesRepository from "../repositories/categoriesRepository"
+import productsRepository from "../repositories/productsRepository"
+import { checkError } from "../middlewares/errorHandler"
+import { IProductData, IProductDataUpdate } from "../types/productTypes"
+import { IUserData } from "../types/authTypes"
 
 async function getProductsByCategoryName(category:string){
-    const checkCategory = await categoriesRepository.findCategoryByName(category);
+    const checkCategory = await categoriesRepository.findCategoryByName(category)
 
-    if(!checkCategory) throw checkError(404,"Categoria não cadastrada!");
+    if(!checkCategory) throw checkError(404,"Categoria não cadastrada!")
 
-    const products = await productsRepository.findProductsByCategoryId(checkCategory.id);
+    const products = await productsRepository.findProductsByCategoryId(checkCategory.id)
 
-    return products;
-};
+    return products
+}
 
 async function getAll() {
-    return await productsRepository.getAllProducts();
-};
+    return await productsRepository.getAllProducts()
+}
 
 async function addProduct(name:string, 
     image:string, category:string, 
     description:string, quantity:number, price:number, hasEdge:boolean, user:IUserData) {
 
-        if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+        if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-        const checkCategory = await categoriesRepository.findCategoryByName(category);
+        const checkCategory = await categoriesRepository.findCategoryByName(category)
 
-        if(!checkCategory) throw checkError(404, "Categoria não registrada!");
+        if(!checkCategory) throw checkError(404, "Categoria não registrada!")
 
         const product:IProductData = {
             name,
@@ -37,18 +37,18 @@ async function addProduct(name:string,
             categoryId: checkCategory.id
         }
     
-        await productsRepository.insert(product);
-};
+        await productsRepository.insert(product)
+}
 
 async function removeProduct(id:number, user:IUserData){
-    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+    if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-    const checkProduct = await productsRepository.findProductById(id);
+    const checkProduct = await productsRepository.findProductById(id)
 
-    if(!checkProduct) throw checkError(404,"Produto não registrado!");
+    if(!checkProduct) throw checkError(404,"Produto não registrado!")
 
-    await productsRepository.remove(id);
-};
+    await productsRepository.remove(id)
+}
 
 async function editProduct(name:string, 
     image:string,  
@@ -57,11 +57,11 @@ async function editProduct(name:string,
     price:number, 
     id:number,
     user:IUserData) {
-        if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!");
+        if(user.email !== process.env.ADMIN_EMAIL) throw checkError(401, "You shall not pass!!!")
 
-        const checkProduct = await productsRepository.findProductById(id);
+        const checkProduct = await productsRepository.findProductById(id)
 
-        if(!checkProduct) throw checkError(404,"Produto não registrado!");
+        if(!checkProduct) throw checkError(404,"Produto não registrado!")
     
         const product:IProductDataUpdate = {
             imageURL:image,
@@ -69,10 +69,10 @@ async function editProduct(name:string,
             quantity,
             price,
             name
-        };
+        }
 
-        return await productsRepository.update(id,product);
-};
+        return await productsRepository.update(id,product)
+}
 
 const productServices = {
     getProductsByCategoryName,
@@ -80,6 +80,6 @@ const productServices = {
     getAll,
     removeProduct,
     editProduct
-};
+}
 
-export default productServices;
+export default productServices

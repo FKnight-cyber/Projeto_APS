@@ -1,4 +1,4 @@
-import joi from "joi";
+import joi from "joi"
 
 export const signUpSchema = joi.object({
     name: joi.string().max(60).required(),
@@ -6,9 +6,9 @@ export const signUpSchema = joi.object({
     houseNumber: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string().max(20).required()
-});
+})
 
 export const signInSchema = joi.object({
     email: joi.string().email().required(),
     password: joi.string().required()
-});
+})

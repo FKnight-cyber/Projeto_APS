@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
-import productServices from "../services/productService";
+import { Request, Response } from "express"
+import productServices from "../services/productService"
 
 export async function getProducts(req:Request, res:Response){
-    const category:string = req.query.category!.toString();
+    const category:string = req.query.category!.toString()
 
     const products = await productServices.getProductsByCategoryName(category)
 
-    res.status(200).send(products);
-};
+    res.status(200).send(products)
+}
 
 export async function addProduct(req:Request, res:Response) {
-    const { userInfo } = res.locals;
+    const { userInfo } = res.locals
 
     const { name, image, category, description, quantity, price, hasEdge } : 
     { 
@@ -21,38 +21,38 @@ export async function addProduct(req:Request, res:Response) {
         quantity:number, 
         price:number,
         hasEdge:boolean, 
-    } = req.body;
+    } = req.body
 
     await productServices.addProduct(name, 
         image, 
         category, 
         description, 
-        quantity, price, hasEdge, userInfo.data);
+        quantity, price, hasEdge, userInfo.data)
 
-    res.sendStatus(201);
-};
+    res.sendStatus(201)
+}
 
 export async function getAllProducts(req:Request, res:Response) {
     
-    const products = await productServices.getAll();
+    const products = await productServices.getAll()
 
-    res.status(200).send(products);
-};
+    res.status(200).send(products)
+}
 
 export async function deleteProduct(req:Request, res:Response) {
-    const { userInfo } = res.locals;
+    const { userInfo } = res.locals
 
-    const id:number = Number(req.params.id);
+    const id:number = Number(req.params.id)
 
-    await productServices.removeProduct(id, userInfo.data);
+    await productServices.removeProduct(id, userInfo.data)
 
-    res.sendStatus(202);
-};
+    res.sendStatus(202)
+}
 
 export async function editProduct(req:Request, res:Response) {
-    const { userInfo } = res.locals;
+    const { userInfo } = res.locals
 
-    const id:number = Number(req.params.id);
+    const id:number = Number(req.params.id)
 
     const { name, image, description, quantity, price } : 
     { 
@@ -61,9 +61,9 @@ export async function editProduct(req:Request, res:Response) {
         description:string, 
         quantity:number, 
         price:number
-    } = req.body;
+    } = req.body
 
-    await productServices.editProduct(name, image, description, quantity, price, id, userInfo.data);
+    await productServices.editProduct(name, image, description, quantity, price, id, userInfo.data)
 
-    res.sendStatus(202);
-};
+    res.sendStatus(202)
+}

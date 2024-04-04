@@ -1,19 +1,19 @@
-import prisma from "../database";
+import prisma from "../database"
 
 async function findCategoryByName(name:string) {
-    return await prisma.category.findFirst({where:{name}});
-};
+    return await prisma.category.findFirst({where:{name}})
+}
 
 async function findCategoryById(id:number) {
-    return await prisma.category.findUnique({where:{id}});
-};
+    return await prisma.category.findUnique({where:{id}})
+}
 
 async function getCategories(){
-    return await prisma.category.findMany({orderBy:{id:'asc'}});
-};
+    return await prisma.category.findMany({orderBy:{id:'asc'}})
+}
 
 async function insert(name:string){
-    await prisma.category.create({data:{name}});
+    await prisma.category.create({data:{name}})
 }
 
 async function update(id:number,name:string){
@@ -25,11 +25,11 @@ async function update(id:number,name:string){
             name
         }
     })
-};
+}
 
 async function remove(id:number) {
-    await prisma.category.delete({where:{id}});
-};
+    await prisma.category.delete({where:{id}})
+}
 
 const categoriesRepository = {
     findCategoryByName,
@@ -38,6 +38,6 @@ const categoriesRepository = {
     update,
     remove,
     insert
-};
+}
 
-export default categoriesRepository;
+export default categoriesRepository

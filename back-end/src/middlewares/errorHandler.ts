@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express"
 
-export default async function errorHandler(error:any, req:Request, res:Response, next:NextFunction) {
-    return res.status(error.status).send(error.message);
-};
+export default async function errorHandler(error:any, req:Request, res:Response, _:NextFunction) {
+    return res.status(error.status).send(error.message)
+}
 
 export function checkError(status:number, message:string){
     return {

@@ -1,26 +1,26 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { checkError } from "./errorHandler";
+import { Request, Response, NextFunction } from "express"
+import jwt from "jsonwebtoken"
+import { checkError } from "./errorHandler"
 
 export default async function authentication(req:Request, res:Response, next:NextFunction) {
-    let token:any = req.headers['x-access-token'];
+    let token:any = req.headers['x-access-token']
 
     if(token){
-        token = token.toString();
+        token = token.toString()
     }
 
-    if(!token) throw checkError(401, "Você precisa enviar o token de autorização!");
+    if(!token) throw checkError(401, "Você precisa enviar o token de autorização!")
 
-    const secret = process.env.JWT_SECRET!.toString();
+    const secret = process.env.JWT_SECRET!.toString()
 
     try {
-        jwt.verify(token, secret);
+        jwt.verify(token, secret)
 
-        const data = jwt.decode(token, { complete: true });
+        const data = jwt.decode(token, { complete: true })
 
-        res.locals.userInfo = data?.payload;
+        res.locals.userInfo = data?.payload
         
-        next();
+        next()
     } catch (error) {
         throw checkError(401, "Token inválido ou expirou!")
     }

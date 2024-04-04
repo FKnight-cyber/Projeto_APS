@@ -1,8 +1,8 @@
-import prisma from "../database";
-import { IProductData, IProductDataUpdate } from "../types/productTypes";
+import prisma from "../database"
+import { IProductData, IProductDataUpdate } from "../types/productTypes"
 
 async function insert(product:IProductData) {
-    await prisma.product.create({data:product});
+    await prisma.product.create({data:product})
 }
 
 async function getAllProducts() {
@@ -22,12 +22,12 @@ async function findProductsByCategoryId(id:number) {
                     gt:0
                 }
             }
-        });
-};
+        })
+}
 
 async function findProductById(id:number) {
-    return await prisma.product.findUnique({where:{id}});
-};
+    return await prisma.product.findUnique({where:{id}})
+}
 
 async function order(id:number,amount:number) {
     await prisma.product.update({
@@ -39,8 +39,8 @@ async function order(id:number,amount:number) {
                 decrement: amount
             }
         }
-    });
-};
+    })
+}
 
 async function cancelOrder(id:number,amount:number) {
     await prisma.product.update({
@@ -52,16 +52,16 @@ async function cancelOrder(id:number,amount:number) {
                 increment: amount
             }
         }
-    });
-};
+    })
+}
 
 async function remove(id:number) {
-    await prisma.product.delete({where:{id}});
-};
+    await prisma.product.delete({where:{id}})
+}
 
 async function deleteAllProductsByCategoryId(categoryId:number){
-    await prisma.product.deleteMany({where:{categoryId}});
-};
+    await prisma.product.deleteMany({where:{categoryId}})
+}
 
 async function update(id:number,product:IProductDataUpdate){
     await prisma.product.update({
@@ -70,7 +70,7 @@ async function update(id:number,product:IProductDataUpdate){
         },
         data:product
     })
-};
+}
 
 const productsRepository = {
     findProductsByCategoryId,
@@ -82,6 +82,6 @@ const productsRepository = {
     remove,
     update,
     deleteAllProductsByCategoryId
-};
+}
 
-export default productsRepository;
+export default productsRepository
